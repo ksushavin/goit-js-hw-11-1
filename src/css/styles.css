@@ -15,14 +15,110 @@ body {
   line-height: 1.0;
 }
 
-#search-box {
+
+.search-form {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  padding-top: 17px;
+  width: 100vw;
+  height: 70px;
+
+  background-image: 
+    linear-gradient(
+      to bottom,
+      #dabde2,
+      #ffffff);
+  border-color: rgba(230, 232, 235, 0.781);
+  border-width: 1.5px; 
+
+  text-align: center;    
   font: inherit;
-  padding: 8px;
-  width: 320px;
-  margin-top: 50px ;
-  margin-left: 40px;
-  margin-bottom: 20px;
-  border-color: rgba(132, 171, 243, 0.781);
-  border-width: 1.5px;
+}
+.search-form input {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 200px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1.5px solid #838485e3;
 }
 
+input::placeholder {
+  color: #717174e3;
+}
+
+.button {
+  width: 100px;
+  height: 32px;
+  border-radius: 4px;
+  border-radius: 4px;
+
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff,
+    #353536 65%
+  );
+  border: 1.5px solid #afb1b4e3;
+  color: white;
+
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.gallery {
+  max-width: 1280px;
+  padding-top: 70px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: -20px;
+  margin-left: -20px;
+}
+.photo-card {
+  flex-basis: calc(100% / 5 - 20px);
+  margin-top: 20px;
+  margin-left: 20px;
+  box-shadow: 
+    0px 3px 1px rgba(0, 0, 0, 0.1), 
+    0px 1px 2px rgba(0, 0, 0, 0.08), 
+    0px 2px 2px rgba(0, 0, 0, 0.12);
+}
+
+.gallery-link {
+  text-decoration: none;
+  color: inherit;
+}
+.photo-card img{
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.info-item {
+  text-align: center;
+  font-size: 10px;
+}
+.load-more.is-hidden {
+  display: none;
+}
+
+.load-more{
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: 
+    linear-gradient(
+      to bottom,
+      #ffffff,
+      #353536 65%);
+}
