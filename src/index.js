@@ -2,7 +2,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import PicsApiService from "./pic-api-service";
+import PicsApiService from "./picApiService";
 import './css/styles.css';
 
 const refs = {
@@ -25,16 +25,17 @@ async function onSearch(e) {
     e.preventDefault();
     const inputValue = e.currentTarget.elements.searchQuery.value.trim();
 
-    if (!inputValue) {
-        Notify.info("Please, enter your search guery.");
-        return
-    } else if (inputValue === picsApiService.guery) {
+    // поміняла місцями перші дві умови і тепер умова 32 рядка не працює
+    if (inputValue === picsApiService.query) {
         scrollPageUp();
+        return
+    } else if (!inputValue) {
+        Notify.info("Please, enter your search query.");
         return
     } else {
         refs.gallery.innerHTML = "";
         hideLoadMoreBtn();
-        picsApiService.guery = inputValue;
+        picsApiService.query = inputValue;
         picsApiService.resetPage();
         try {
             const { hits, totalHits } = await picsApiService.getPics();
@@ -53,6 +54,19 @@ async function onSearch(e) {
     }
 }
 
+async function onLoadMoreBtnClick() {
+    const { hits, totalHits } = await picsApiService.getPics();
+
+    try {
+        appendPicsMarkup(hits);
+        scrollByDown();
+        simpleLightbox.refresh();
+        countAndIncrementPages(totalHits) 
+    } catch (error) {
+        console.log(error)
+    }  
+}
+
 function countAndIncrementPages(amount) {
     const pageAmount = Math.ceil(amount / 40);
     const currentPage = picsApiService.page;
@@ -66,16 +80,6 @@ function countAndIncrementPages(amount) {
         picsApiService.incrementPage();
         return
 }
-
-
-async function onLoadMoreBtnClick() {
-    const { hits, totalHits } = await picsApiService.getPics();
-    appendPicsMarkup(hits);
-    scrollByDown();
-    simpleLightbox.refresh();
-    countAndIncrementPages(totalHits) 
-}
-
 
 function appendPicsMarkup(picsArray) {
     refs.gallery.insertAdjacentHTML("beforeend", creatPicsMarkup(picsArray));
